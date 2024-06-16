@@ -1,0 +1,59 @@
+@startuml
+class User {
+  +userID: int
+  +name: string
+  +email: string
+  +password: string
+  +credit: float
+  +purchaseCredit(amount: float): void
+  +buyFilm(filmID: int): void
+  +requestFilm(filmID: int): void
+}
+
+class Subscriber {
+  +subscriptionStartDate: date
+  +subscriptionEndDate: date
+  +rentFilm(filmID: int): void
+}
+
+User <|-- Subscriber
+
+class Film {
+  +filmID: int
+  +title: string
+  +price: float
+  +rentalPrice: float
+  +availability: bool
+}
+
+class Subscription {
+  +subscriptionID: int
+  +userID: int
+  +startDate: date
+  +endDate: date
+  +price: float
+}
+
+class CreditTransaction {
+  +transactionID: int
+  +userID: int
+  +amount: float
+  +date: date
+}
+
+class FilmRequest {
+  +requestID: int
+  +userID: int
+  +filmTitle: string
+  +requestDate: date
+  +status: string
+}
+
+User "1" -- "0..*" CreditTransaction: makes
+User "1" -- "0..*" Subscription: has
+User "1" -- "0..*" FilmRequest: submits
+User "1" -- "0..*" Film: rents/buys
+
+Subscriber "1" -- "0..*" Film: rents
+
+@enduml
